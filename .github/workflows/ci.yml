@@ -92,6 +92,7 @@ jobs:
         uses: python-semantic-release/python-semantic-release@v9.8.6
         if: github.ref_name != 'main'
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           root_options: --noop
 
       # On main branch: actual PSR + upload to PyPI & GitHub
