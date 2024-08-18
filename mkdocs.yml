@@ -1,6 +1,13 @@
 site_name: pyExoyOne
 theme:
   name: material
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+  features:
+    - content.action.edit
+    - content.action.view
 
 markdown_extensions:
   - mkdocs-typer
@@ -8,3 +15,8 @@ markdown_extensions:
 plugins:
   - search
   - mkdocstrings
+  - git-revision-date-localized
+
+repo_name: Djelibeybi/pyExoyOne
+repo_url: https://github.com/djelibeybi/pyExoyOne
+edit_uri: edit/main/docs/
