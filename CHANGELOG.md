@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.1.1 (2024-08-18)
+
+### Fix
+
+- Variable typing and associated tests ([`dc7aea3`](https://github.com/Djelibeybi/pyExoyOne/commit/dc7aea3437dbb2be72eef83093e0b8882b68e118))
+- Backoff logging and add device_type property ([`51721a8`](https://github.com/Djelibeybi/pyExoyOne/commit/51721a8dd19c95171df81aa815ecb62e4f92ba95))
+- Include the device type enumeration ([`688399a`](https://github.com/Djelibeybi/pyExoyOne/commit/688399a83e4de05f2bf63e5899ba827a249bf965))
+- Export the errors, exceptions and mode packs ([`69e6026`](https://github.com/Djelibeybi/pyExoyOne/commit/69e6026d435d3bef196cb1f3ef0e91ad8847a209))
+- Use correct case for project name ([`23adf9e`](https://github.com/Djelibeybi/pyExoyOne/commit/23adf9e112797718846580d5b90c4dfedad5f41f))
+
+### Documentation
+
+- Add djelibeybi as a contributor for code, doc, and 2 more (#11) ([`aaa3501`](https://github.com/Djelibeybi/pyExoyOne/commit/aaa35019bf30d9cd03bbf011a883bbdde59f3f38))
+- Adjust mkdocs and all-contributors configuration (#10) ([`5153eb2`](https://github.com/Djelibeybi/pyExoyOne/commit/5153eb22a8cbf19ceb588880ea05a3f267e9bfa0))
+
 ## v0.1.0 (2024-08-18)
 
 ### Feature
