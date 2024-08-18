@@ -340,6 +340,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#exoyone.exoyone.ExoyOne.device_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      device_type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exoyone.exoyone.ExoyOne.host" class="md-nav__link">
     <span class="md-ellipsis">
       host
@@ -385,6 +394,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#exoyone.exoyone.ExoyOne.async_get_state" class="md-nav__link">
+    <span class="md-ellipsis">
+      async_get_state
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exoyone.exoyone.ExoyOne.async_set_data" class="md-nav__link">
     <span class="md-ellipsis">
       async_set_data
@@ -415,15 +433,6 @@
   <a href="#exoyone.exoyone.ExoyOne.get_active_pack_name" class="md-nav__link">
     <span class="md-ellipsis">
       get_active_pack_name
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#exoyone.exoyone.ExoyOne.get_state" class="md-nav__link">
-    <span class="md-ellipsis">
-      get_state
     </span>
   </a>
   
@@ -663,8 +672,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 29</span>
-<span class="normal"> 30</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 30</span>
 <span class="normal"> 31</span>
 <span class="normal"> 32</span>
 <span class="normal"> 33</span>
@@ -912,7 +920,14 @@
 <span class="normal">275</span>
 <span class="normal">276</span>
 <span class="normal">277</span>
-<span class="normal">278</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ExoyOne</span><span class="p">:</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ExoyOne</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Representation of an ExoyOne Light.&quot;&quot;&quot;</span>
 
     <span class="n">TIMEOUT</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.0</span>
@@ -921,7 +936,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the ExoyOne library.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">host</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">port</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">:</span> <span class="n">ExoyOneState</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">:</span> <span class="n">ExoyOneState</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mp</span> <span class="o">=</span> <span class="n">ModePacks</span><span class="p">()</span>
 
     <span class="nd">@property</span>
@@ -932,17 +947,21 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return either the user-defined name or mDNS name.&quot;&quot;&quot;</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">mdnsName</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">userDefinedName</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">userDefinedName</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">mdnsName</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">userDefinedName</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">userDefinedName</span>
         <span class="k">return</span> <span class="n">name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExoyOneState</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExoyOneState</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the in-memory state of the ExoyOne.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">device_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the device type.&quot;&quot;&quot;</span>
+        <span class="n">device_type</span> <span class="o">=</span> <span class="n">ExoyDevices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">type</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="n">device_type</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_bool_val</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -959,7 +978,8 @@
         <span class="n">backoff</span><span class="o">.</span><span class="n">expo</span><span class="p">,</span>
         <span class="n">ExoyOneTimeoutError</span><span class="p">,</span>
         <span class="n">max_tries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-        <span class="n">backoff_log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
+        <span class="n">logger</span><span class="o">=</span><span class="n">_LOGGER</span><span class="p">,</span>
+        <span class="n">backoff_log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">async_set_data</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span>
@@ -969,55 +989,49 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">stream</span><span class="p">:</span> <span class="n">DatagramClient</span> <span class="o">=</span> <span class="k">await</span> <span class="n">connect</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">))</span>
             <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">encoded_update</span><span class="p">),</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TIMEOUT</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s2">&quot;connectToWifi&quot;</span> <span class="ow">in</span> <span class="n">request</span> <span class="ow">or</span> <span class="s2">&quot;restartInApMode&quot;</span> <span class="ow">in</span> <span class="n">request</span><span class="p">:</span>
-                <span class="k">return</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_get_data</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TimeoutError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ExoyOneTimeoutError</span><span class="p">()</span> <span class="kn">from</span> <span class="nn">exc</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">del</span> <span class="n">stream</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_get_data</span><span class="p">()</span>
 
     <span class="nd">@backoff</span><span class="o">.</span><span class="n">on_exception</span><span class="p">(</span>
         <span class="n">backoff</span><span class="o">.</span><span class="n">expo</span><span class="p">,</span>
         <span class="n">ExoyOneTimeoutError</span><span class="p">,</span>
         <span class="n">max_tries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
         <span class="n">logger</span><span class="o">=</span><span class="n">_LOGGER</span><span class="p">,</span>
+        <span class="n">backoff_log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">async_get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">DatagramClient</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">async_get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the in-memory state using data from the ExoyOne.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">stream</span><span class="p">:</span> <span class="n">DatagramClient</span> <span class="o">=</span> <span class="k">await</span> <span class="n">connect</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">stream</span> <span class="o">=</span> <span class="n">client</span>
+            <span class="n">stream</span><span class="p">:</span> <span class="n">DatagramClient</span> <span class="o">=</span> <span class="k">await</span> <span class="n">connect</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">))</span>
             <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;{&quot;getData&quot;: 1}&#39;</span><span class="p">),</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TIMEOUT</span><span class="p">)</span>
             <span class="n">reply</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">recv</span><span class="p">(),</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TIMEOUT</span><span class="p">)</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">reply</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">ExoyOneState</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
-            <span class="n">stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">del</span> <span class="n">stream</span>
         <span class="k">except</span> <span class="ne">TimeoutError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ExoyOneTimeoutError</span><span class="p">()</span> <span class="kn">from</span> <span class="nn">exc</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">del</span> <span class="n">stream</span>
 
     <span class="k">def</span> <span class="nf">get_active_pack_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the name of the currently active modpack.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mp</span><span class="o">.</span><span class="n">get_pack_name_from_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">currentModpack</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mp</span><span class="o">.</span><span class="n">get_pack_name_from_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">currentModpack</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_active_effect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the name of the currently active effect.&quot;&quot;&quot;</span>
-        <span class="n">effect_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">effect_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mp</span><span class="o">.</span><span class="n">get_effect_name_from_index</span><span class="p">(</span>
-                <span class="n">pack_index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">currentModpack</span><span class="p">,</span>
-                <span class="n">effect_index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">modeIndex</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">return</span> <span class="n">effect_name</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mp</span><span class="o">.</span><span class="n">get_effect_name_from_index</span><span class="p">(</span>
+            <span class="n">pack_index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">currentModpack</span><span class="p">,</span>
+            <span class="n">effect_index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">modeIndex</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the current state in a human-readable format.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">friendly</span>
-        <span class="k">return</span> <span class="p">{}</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">async_get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExoyOneState</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the current state as an ExoyOne object.&quot;&quot;&quot;</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_get_data</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">restart_in_ap_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Restart the device in AP mode.&quot;&quot;&quot;</span>
@@ -1044,7 +1058,11 @@
         <span class="n">saturation</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">hsb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">255</span><span class="p">))</span>
         <span class="n">brightness</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">hsb</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">255</span><span class="p">))</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">(</span>
-            <span class="p">{</span><span class="s2">&quot;setHue&quot;</span><span class="p">:</span> <span class="n">hue</span><span class="p">,</span> <span class="s2">&quot;setSaturation&quot;</span><span class="p">:</span> <span class="n">saturation</span><span class="p">,</span> <span class="s2">&quot;setBrightness&quot;</span><span class="p">:</span> <span class="n">brightness</span><span class="p">}</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;setHue&quot;</span><span class="p">:</span> <span class="n">hue</span><span class="p">,</span>
+                <span class="s2">&quot;setSaturation&quot;</span><span class="p">:</span> <span class="n">saturation</span><span class="p">,</span>
+                <span class="s2">&quot;setBrightness&quot;</span><span class="p">:</span> <span class="n">brightness</span><span class="p">,</span>
+            <span class="p">}</span>
         <span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">set_hue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hue</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1086,7 +1104,10 @@
 
         <span class="k">if</span> <span class="n">pack_index</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">effect_index</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">(</span>
-                <span class="p">{</span><span class="s2">&quot;setModPack&quot;</span><span class="p">:</span> <span class="n">pack_index</span><span class="p">,</span> <span class="s2">&quot;setEffect&quot;</span><span class="p">:</span> <span class="n">effect_index</span><span class="p">}</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;setModPack&quot;</span><span class="p">:</span> <span class="n">pack_index</span><span class="p">,</span>
+                    <span class="s2">&quot;setEffect&quot;</span><span class="p">:</span> <span class="n">effect_index</span><span class="p">,</span>
+                <span class="p">}</span>
             <span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">toggle_scene_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1179,6 +1200,27 @@
 
 
 
+<h2 id="exoyone.exoyone.ExoyOne.device_type" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">device_type</span><span class="p">:</span> <span class="nb">str</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#exoyone.exoyone.ExoyOne.device_type" class="headerlink" title="Anchor link to this section for reference">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Return the device type.</p>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
 <h2 id="exoyone.exoyone.ExoyOne.host" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">host</span><span class="p">:</span> <span class="nb">str</span></code>
 
@@ -1222,7 +1264,7 @@
 
 
 <h2 id="exoyone.exoyone.ExoyOne.state" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">state</span><span class="p">:</span> <span class="n">ExoyOneState</span> <span class="o">|</span> <span class="kc">None</span></code>
+            <code class="highlight language-python"><span class="n">state</span><span class="p">:</span> <span class="n">ExoyOneState</span></code>
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
@@ -1255,16 +1297,16 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
-<span class="normal">35</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
 <span class="normal">36</span>
 <span class="normal">37</span>
 <span class="normal">38</span>
-<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8888</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">39</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8888</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the ExoyOne library.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">host</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">port</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">:</span> <span class="n">ExoyOneState</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">:</span> <span class="n">ExoyOneState</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_mp</span> <span class="o">=</span> <span class="n">ModePacks</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1276,7 +1318,7 @@
 
 
 <h2 id="exoyone.exoyone.ExoyOne.async_get_data" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">async_get_data</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">async_get_data</span><span class="p">()</span></code>
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -1291,14 +1333,7 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 99</span>
 <span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
@@ -1311,27 +1346,64 @@
 <span class="normal">109</span>
 <span class="normal">110</span>
 <span class="normal">111</span>
-<span class="normal">112</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@backoff</span><span class="o">.</span><span class="n">on_exception</span><span class="p">(</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@backoff</span><span class="o">.</span><span class="n">on_exception</span><span class="p">(</span>
     <span class="n">backoff</span><span class="o">.</span><span class="n">expo</span><span class="p">,</span>
     <span class="n">ExoyOneTimeoutError</span><span class="p">,</span>
     <span class="n">max_tries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">logger</span><span class="o">=</span><span class="n">_LOGGER</span><span class="p">,</span>
+    <span class="n">backoff_log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">async_get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">DatagramClient</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">async_get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the in-memory state using data from the ExoyOne.&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">stream</span><span class="p">:</span> <span class="n">DatagramClient</span> <span class="o">=</span> <span class="k">await</span> <span class="n">connect</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">stream</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="n">stream</span><span class="p">:</span> <span class="n">DatagramClient</span> <span class="o">=</span> <span class="k">await</span> <span class="n">connect</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">))</span>
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;{&quot;getData&quot;: 1}&#39;</span><span class="p">),</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TIMEOUT</span><span class="p">)</span>
         <span class="n">reply</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">recv</span><span class="p">(),</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TIMEOUT</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">reply</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">ExoyOneState</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
-        <span class="n">stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">del</span> <span class="n">stream</span>
     <span class="k">except</span> <span class="ne">TimeoutError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">ExoyOneTimeoutError</span><span class="p">()</span> <span class="kn">from</span> <span class="nn">exc</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">del</span> <span class="n">stream</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="exoyone.exoyone.ExoyOne.async_get_state" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">async_get_state</span><span class="p">()</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#exoyone.exoyone.ExoyOne.async_get_state" class="headerlink" title="Anchor link to this section for reference">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Return the current state as an ExoyOne object.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">async_get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExoyOneState</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the current state as an ExoyOne object.&quot;&quot;&quot;</span>
+    <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_get_data</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1357,12 +1429,7 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">77</span>
 <span class="normal">78</span>
 <span class="normal">79</span>
 <span class="normal">80</span>
@@ -1375,11 +1442,19 @@
 <span class="normal">87</span>
 <span class="normal">88</span>
 <span class="normal">89</span>
-<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@backoff</span><span class="o">.</span><span class="n">on_exception</span><span class="p">(</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span>
+<span class="normal">97</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@backoff</span><span class="o">.</span><span class="n">on_exception</span><span class="p">(</span>
     <span class="n">backoff</span><span class="o">.</span><span class="n">expo</span><span class="p">,</span>
     <span class="n">ExoyOneTimeoutError</span><span class="p">,</span>
     <span class="n">max_tries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">backoff_log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
+    <span class="n">logger</span><span class="o">=</span><span class="n">_LOGGER</span><span class="p">,</span>
+    <span class="n">backoff_log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">async_set_data</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span>
@@ -1389,11 +1464,12 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">stream</span><span class="p">:</span> <span class="n">DatagramClient</span> <span class="o">=</span> <span class="k">await</span> <span class="n">connect</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">))</span>
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">encoded_update</span><span class="p">),</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TIMEOUT</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;connectToWifi&quot;</span> <span class="ow">in</span> <span class="n">request</span> <span class="ow">or</span> <span class="s2">&quot;restartInApMode&quot;</span> <span class="ow">in</span> <span class="n">request</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_get_data</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">TimeoutError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">ExoyOneTimeoutError</span><span class="p">()</span> <span class="kn">from</span> <span class="nn">exc</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">del</span> <span class="n">stream</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_get_data</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1419,14 +1495,7 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">240</span>
-<span class="normal">241</span>
-<span class="normal">242</span>
-<span class="normal">243</span>
-<span class="normal">244</span>
-<span class="normal">245</span>
-<span class="normal">246</span>
-<span class="normal">247</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">247</span>
 <span class="normal">248</span>
 <span class="normal">249</span>
 <span class="normal">250</span>
@@ -1436,7 +1505,14 @@
 <span class="normal">254</span>
 <span class="normal">255</span>
 <span class="normal">256</span>
-<span class="normal">257</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">connect_to_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ssid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">connect_to_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ssid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set new Wi-Fi connection credentials.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ssid</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">password</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">ExoyOneValueError</span><span class="p">(</span>
@@ -1475,23 +1551,17 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">124</span>
 <span class="normal">125</span>
 <span class="normal">126</span>
 <span class="normal">127</span>
-<span class="normal">128</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_active_effect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="normal">128</span>
+<span class="normal">129</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_active_effect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the currently active effect.&quot;&quot;&quot;</span>
-    <span class="n">effect_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">effect_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mp</span><span class="o">.</span><span class="n">get_effect_name_from_index</span><span class="p">(</span>
-            <span class="n">pack_index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">currentModpack</span><span class="p">,</span>
-            <span class="n">effect_index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">modeIndex</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="k">return</span> <span class="n">effect_name</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mp</span><span class="o">.</span><span class="n">get_effect_name_from_index</span><span class="p">(</span>
+        <span class="n">pack_index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">currentModpack</span><span class="p">,</span>
+        <span class="n">effect_index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">modeIndex</span><span class="p">,</span>
+    <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1513,45 +1583,11 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_active_pack_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_active_pack_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the name of the currently active modpack.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mp</span><span class="o">.</span><span class="n">get_pack_name_from_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">currentModpack</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="exoyone.exoyone.ExoyOne.get_state" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">get_state</span><span class="p">()</span></code>
-
-<a href="#exoyone.exoyone.ExoyOne.get_state" class="headerlink" title="Anchor link to this section for reference">&para;</a></h2>
-
-
-    <div class="doc doc-contents ">
-
-      <p>Return the current state in a human-readable format.</p>
-
-            <details class="quote">
-              <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the current state in a human-readable format.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">friendly</span>
-    <span class="k">return</span> <span class="p">{}</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mp</span><span class="o">.</span><span class="n">get_pack_name_from_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">currentModpack</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1577,10 +1613,10 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">259</span>
-<span class="normal">260</span>
-<span class="normal">261</span>
-<span class="normal">262</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">powered_by_powerbank</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">powered_by_powerbank</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Toggle power consumption reduction when running on batteries.&quot;&quot;&quot;</span>
     <span class="n">request</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;poweredByPowerbank&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bool_val</span><span class="p">(</span><span class="n">state</span><span class="p">)}</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
@@ -1639,9 +1675,9 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">172</span>
-<span class="normal">173</span>
-<span class="normal">174</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brightness</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brightness</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the brightness.&quot;&quot;&quot;</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_set_hsbs</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;setBrightness&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">brightness</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -1676,13 +1712,21 @@
 <span class="normal">159</span>
 <span class="normal">160</span>
 <span class="normal">161</span>
-<span class="normal">162</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hsb</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hsb</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the hue, saturation and brightness in a single call.&quot;&quot;&quot;</span>
     <span class="n">hue</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">hsb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">255</span><span class="p">))</span>
     <span class="n">saturation</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">hsb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">255</span><span class="p">))</span>
     <span class="n">brightness</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">hsb</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">255</span><span class="p">))</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">(</span>
-        <span class="p">{</span><span class="s2">&quot;setHue&quot;</span><span class="p">:</span> <span class="n">hue</span><span class="p">,</span> <span class="s2">&quot;setSaturation&quot;</span><span class="p">:</span> <span class="n">saturation</span><span class="p">,</span> <span class="s2">&quot;setBrightness&quot;</span><span class="p">:</span> <span class="n">brightness</span><span class="p">}</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;setHue&quot;</span><span class="p">:</span> <span class="n">hue</span><span class="p">,</span>
+            <span class="s2">&quot;setSaturation&quot;</span><span class="p">:</span> <span class="n">saturation</span><span class="p">,</span>
+            <span class="s2">&quot;setBrightness&quot;</span><span class="p">:</span> <span class="n">brightness</span><span class="p">,</span>
+        <span class="p">}</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1709,9 +1753,9 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">276</span>
-<span class="normal">277</span>
-<span class="normal">278</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_color_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_color_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use async_set_data to change the selectedColorMode value.&quot;&quot;&quot;</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">({</span><span class="s2">&quot;setColorMode&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
 </code></pre></div></td></tr></table></div>
@@ -1739,9 +1783,9 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">190</span>
-<span class="normal">191</span>
-<span class="normal">192</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_cycle_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cycle_speed</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_cycle_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cycle_speed</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set cycle speed in seconds.&quot;&quot;&quot;</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">({</span><span class="s2">&quot;setCycleSpeed&quot;</span><span class="p">:</span> <span class="n">cycle_speed</span><span class="p">})</span>
 </code></pre></div></td></tr></table></div>
@@ -1769,17 +1813,20 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">198</span>
 <span class="normal">199</span>
 <span class="normal">200</span>
 <span class="normal">201</span>
 <span class="normal">202</span>
 <span class="normal">203</span>
-<span class="normal">204</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">effect</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">effect</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set mode mode_pack and effect.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">effect</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">pack_index</span><span class="p">,</span> <span class="n">effect_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mp</span><span class="o">.</span><span class="n">get_indices_from_effect_name</span><span class="p">(</span><span class="n">effect</span><span class="p">)</span>
@@ -1788,7 +1835,10 @@
 
     <span class="k">if</span> <span class="n">pack_index</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">effect_index</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">(</span>
-            <span class="p">{</span><span class="s2">&quot;setModPack&quot;</span><span class="p">:</span> <span class="n">pack_index</span><span class="p">,</span> <span class="s2">&quot;setEffect&quot;</span><span class="p">:</span> <span class="n">effect_index</span><span class="p">}</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;setModPack&quot;</span><span class="p">:</span> <span class="n">pack_index</span><span class="p">,</span>
+                <span class="s2">&quot;setEffect&quot;</span><span class="p">:</span> <span class="n">effect_index</span><span class="p">,</span>
+            <span class="p">}</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1815,9 +1865,9 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">164</span>
-<span class="normal">165</span>
-<span class="normal">166</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_hue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hue</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_hue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hue</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the hue.&quot;&quot;&quot;</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_set_hsbs</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;setHue&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">hue</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -1845,12 +1895,12 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">211</span>
-<span class="normal">212</span>
-<span class="normal">213</span>
-<span class="normal">214</span>
-<span class="normal">215</span>
-<span class="normal">216</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a new user-friendly name.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">39</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="mi">39</span><span class="p">]</span>
@@ -1881,9 +1931,9 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">268</span>
-<span class="normal">269</span>
-<span class="normal">270</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_palette</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_palette</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use async_set_data to change the selectedPalette value.&quot;&quot;&quot;</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">({</span><span class="s2">&quot;setPalette&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
 </code></pre></div></td></tr></table></div>
@@ -1911,9 +1961,9 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">264</span>
-<span class="normal">265</span>
-<span class="normal">266</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use async_set_data to change the selectedPattern value.&quot;&quot;&quot;</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">({</span><span class="s2">&quot;setPattern&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
 </code></pre></div></td></tr></table></div>
@@ -1941,9 +1991,9 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">272</span>
-<span class="normal">273</span>
-<span class="normal">274</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_render_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_render_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use async_set_data to change the selectedRenderMode value.&quot;&quot;&quot;</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">({</span><span class="s2">&quot;setRenderMode&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
 </code></pre></div></td></tr></table></div>
@@ -1971,9 +2021,9 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">168</span>
-<span class="normal">169</span>
-<span class="normal">170</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_saturation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saturation</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_saturation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saturation</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the saturation.&quot;&quot;&quot;</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_set_hsbs</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;setSaturation&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">saturation</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -2001,14 +2051,7 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">218</span>
-<span class="normal">219</span>
-<span class="normal">220</span>
-<span class="normal">221</span>
-<span class="normal">222</span>
-<span class="normal">223</span>
-<span class="normal">224</span>
-<span class="normal">225</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">225</span>
 <span class="normal">226</span>
 <span class="normal">227</span>
 <span class="normal">228</span>
@@ -2021,7 +2064,14 @@
 <span class="normal">235</span>
 <span class="normal">236</span>
 <span class="normal">237</span>
-<span class="normal">238</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_shutdown_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minutes</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_shutdown_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minutes</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a shutdown timer of at least 5 and at most 480 minutes.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">minutes</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">_LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Disabling shutdown timer.&quot;</span><span class="p">)</span>
@@ -2067,9 +2117,9 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">176</span>
-<span class="normal">177</span>
-<span class="normal">178</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">set_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the speed.&quot;&quot;&quot;</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_set_hsbs</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;setSpeed&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">speed</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -2129,10 +2179,10 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">180</span>
-<span class="normal">181</span>
-<span class="normal">182</span>
-<span class="normal">183</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">toggle_mode_cycle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">toggle_mode_cycle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Toggle automatic mode change after set interval.&quot;&quot;&quot;</span>
     <span class="n">request</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;toggleModeCycle&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bool_val</span><span class="p">(</span><span class="n">state</span><span class="p">)}</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
@@ -2161,10 +2211,10 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">185</span>
-<span class="normal">186</span>
-<span class="normal">187</span>
-<span class="normal">188</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">toggle_music_sync</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">toggle_music_sync</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Toggle music sync.&quot;&quot;&quot;</span>
     <span class="n">request</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;toggleMusicSync&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bool_val</span><span class="p">(</span><span class="n">state</span><span class="p">)}</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
@@ -2225,10 +2275,10 @@
 
             <details class="quote">
               <summary>Source code in <code>src/exoyone/exoyone.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">206</span>
-<span class="normal">207</span>
-<span class="normal">208</span>
-<span class="normal">209</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">toggle_scene_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">toggle_scene_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Toggle scene generation.&quot;&quot;&quot;</span>
     <span class="n">request</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;toggleSceneGeneration&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bool_val</span><span class="p">(</span><span class="n">state</span><span class="p">)}</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_set_data</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
