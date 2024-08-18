@@ -1,7 +1,23 @@
 __version__ = "0.1.0"
 
 from .exoyone import ExoyOne
-from .models import mode_packs
+from .models import (
+    ExoyOneAssertionError,
+    ExoyOneException,
+    ExoyOneTimeoutError,
+    ExoyOneValueError,
+    mode_packs,
+)
+from .models import ModePacks as ExoyOneModePacks
 from .state import ExoyOneState
 
-__all__ = ["ExoyOne", "ExoyOneState", "mode_packs"]
+__all__ = [
+    "ExoyOne",
+    "ExoyOneAssertionError",
+    "ExoyOneException",
+    "ExoyOneModePacks",
+    "ExoyOneState",
+    "ExoyOneTimeoutError",
+    "ExoyOneValueError",
+    "mode_packs",
+]
