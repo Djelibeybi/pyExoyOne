@@ -52,6 +52,11 @@ class TestExoyOne:
             with pytest.raises(ExoyOneTimeoutError):
                 await exoyone.toggle_power(True)
 
+    async def test_device_type(self, exoyone):
+        """Test the device type is returned."""
+        await exoyone.async_get_data()
+        assert exoyone.device_type == "Ultra Dense Dodecahedron"
+
     async def test_name(self, exoyone):
         """Test the device name and user defined names are returned."""
         await exoyone.async_get_data()

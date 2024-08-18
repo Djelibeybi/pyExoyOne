@@ -9,7 +9,7 @@ from enum import StrEnum
 import rich
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
-from exoyone import ExoyOne
+from .. import ExoyOne
 
 
 def hsb_to_rgb(hue: int, saturation: int, brightness: int) -> tuple[int, int, int]:
@@ -101,9 +101,8 @@ def get_exoyone(host: str) -> ExoyOne:
             await exoyone.async_get_data()
 
             while not progress.finished:
-                if exoyone.state is not None:
+                if exoyone.state.currentModpack > -1:
                     progress.update(task, completed=1)
-
                 await asyncio.sleep(0.1)
 
     asyncio.run(_async_get())
