@@ -246,7 +246,7 @@ def everything(
             if field.lower() == "shutdown timer":
                 value_text = "Disabled"
                 if isinstance(value, int) and value > 0:
-                    value_text = f"{int(value/60)} minutes"
+                    value_text = f"{int(value / 60)} minutes"
 
             elif field.lower() == "mode cycle speed":
                 value_text = "Disabled"

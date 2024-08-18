@@ -60,12 +60,8 @@ class ExoyOne:
     @property
     def device_type(self) -> str:
         """Return the device type."""
-        device_type = next(
-            name.replace("_", " ").title()
-            for name, value in ExoyDevices.__members__.items()
-            if value == self._state.type
-        )
-        return device_type
+        device_type = ExoyDevices(self._state.type).name
+        return device_type.replace("_", " ").title()
 
     @staticmethod
     def _bool_val(value: bool | int | str) -> int:
@@ -83,7 +79,7 @@ class ExoyOne:
         ExoyOneTimeoutError,
         max_tries=3,
         logger=_LOGGER,
-        backoff_log_level=logging.WARNING,
+        backoff_log_level=logging.DEBUG,
     )
     async def async_set_data(
         self, request: Mapping[str, Mapping[str, int | str] | bool | int | str]
@@ -93,34 +89,33 @@ class ExoyOne:
         try:
             stream: DatagramClient = await connect((self._host, self._port))
             await asyncio.wait_for(stream.send(encoded_update), timeout=self.TIMEOUT)
-            if "connectToWifi" in request or "restartInApMode" in request:
-                return
-            await self.async_get_data(stream)
         except TimeoutError as exc:
             raise ExoyOneTimeoutError() from exc
+        finally:
+            stream.close()
+            del stream
+            await self.async_get_data()
 
     @backoff.on_exception(
         backoff.expo,
         ExoyOneTimeoutError,
         max_tries=3,
         logger=_LOGGER,
-        backoff_log_level=logging.WARNING,
+        backoff_log_level=logging.DEBUG,
     )
-    async def async_get_data(self, client: DatagramClient | None = None) -> None:
+    async def async_get_data(self) -> None:
         """Update the in-memory state using data from the ExoyOne."""
         try:
-            if client is None:
-                stream: DatagramClient = await connect((self._host, self._port))
-            else:
-                stream = client
+            stream: DatagramClient = await connect((self._host, self._port))
             await asyncio.wait_for(stream.send(b'{"getData": 1}'), timeout=self.TIMEOUT)
             reply, _ = await asyncio.wait_for(stream.recv(), timeout=self.TIMEOUT)
             data = json.loads(reply.decode("utf-8"))
             self._state = ExoyOneState(**data)
-            stream.close()
-            del stream
         except TimeoutError as exc:
             raise ExoyOneTimeoutError() from exc
+        finally:
+            stream.close()
+            del stream
 
     def get_active_pack_name(self) -> str:
         """Return the name of the currently active modpack."""
@@ -133,9 +128,10 @@ class ExoyOne:
             effect_index=self._state.modeIndex,
         )
 
-    def get_state(self) -> dict[str, dict[str, int | str | tuple[int, int, int]]]:
-        """Return the current state in a human-readable format."""
-        return self._state.friendly
+    async def async_get_state(self) -> ExoyOneState:
+        """Return the current state as an ExoyOne object."""
+        await self.async_get_data()
+        return self._state
 
     async def restart_in_ap_mode(self) -> None:
         """Restart the device in AP mode."""
