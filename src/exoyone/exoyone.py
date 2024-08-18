@@ -13,6 +13,7 @@ from asyncio_dgram.aio import DatagramClient, connect
 
 from . import __version__
 from .models import (
+    ExoyDevices,
     ExoyOneTimeoutError,
     ExoyOneValueError,
     ModePacks,
@@ -58,6 +59,17 @@ class ExoyOne:
         """Returns the in-memory state of the ExoyOne."""
         return self._state
 
+    @property
+    def device_type(self) -> str:
+        """Return the device type."""
+        if self._state is not None:
+            return next(
+                name.replace("_", " ").title()
+                for name, value in ExoyDevices.__members__.items()
+                if value == self._state.type
+            )
+        return ""
+
     @staticmethod
     def _bool_val(value: bool | int | str) -> int:
         """Return 1 for truthy state or 0 for falsy state."""
@@ -73,6 +85,7 @@ class ExoyOne:
         backoff.expo,
         ExoyOneTimeoutError,
         max_tries=3,
+        logger=_LOGGER,
         backoff_log_level=logging.WARNING,
     )
     async def async_set_data(
@@ -94,6 +107,7 @@ class ExoyOne:
         ExoyOneTimeoutError,
         max_tries=3,
         logger=_LOGGER,
+        backoff_log_level=logging.WARNING,
     )
     async def async_get_data(self, client: DatagramClient | None = None) -> None:
         """Update the in-memory state using data from the ExoyOne."""
