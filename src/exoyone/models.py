@@ -32,6 +32,26 @@ class ExoyOneAssertionError(AssertionError):
     """ExoyOne assertion error."""
 
 
+class ExoyDevices(IntEnum):
+    """Enumeration of Exoy devices."""
+
+    INFINITY_OBJECT = 0
+    HYPERCUBE = 1
+    ULTRA_DENSE_HYPERCUBE = 2
+    DODECAHEDRON = 3
+    ULTRA_DENSE_DODECAHEDRON = 4
+    MIRROR = 5
+    ULTRA_DENSE_MIRROR = 6
+    ICOSAHEDRON = 7
+    ULTRA_DENSE_ICOSAHEDRON = 8
+    TETRAHEDRON = 9
+    ULTRA_DENSE_TETRAHEDRON = 10
+    HEXAGON = 11
+    ULTRA_DENSE_HEXAGON = 12
+    SOUND_VISUALISER = 13
+    ULTRA_DENSE_SOUND_VISUALISER = 14
+
+
 class TruthyFalsyWords(IntEnum):
     """Truthy and falsy words."""
 
