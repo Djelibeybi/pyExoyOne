@@ -1,6 +1,29 @@
 site_name: pyExoyOne
 theme:
   name: material
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+      primary: orange
+      accent: deep orange
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+      primary: deep orange
+      accent: orange
+
   icon:
     repo: fontawesome/brands/github
     edit: material/pencil
@@ -8,8 +31,19 @@ theme:
   features:
     - content.action.edit
     - content.action.view
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.top
+    - toc.follow
+    - toc.integrate
 
 markdown_extensions:
+  - toc:
+      permalink: true
+      permalink_title: Anchor link to this section for reference
+
   - mkdocs-typer
 
 plugins:
@@ -20,3 +54,4 @@ plugins:
 repo_name: Djelibeybi/pyExoyOne
 repo_url: https://github.com/djelibeybi/pyExoyOne
 edit_uri: edit/main/docs/
+site_url: https://djelibeybi.github.io/pyExoyOne/
