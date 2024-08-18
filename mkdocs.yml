@@ -1,0 +1,10 @@
+site_name: pyExoyOne
+theme:
+  name: material
+
+markdown_extensions:
+  - mkdocs-typer
+
+plugins:
+  - search
+  - mkdocstrings
