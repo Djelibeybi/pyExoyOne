@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.2 (2024-08-18)
+
+### Fix
+
+- Speed improvements and returning state for hass integration ([`fc5b367`](https://github.com/Djelibeybi/pyExoyOne/commit/fc5b3672a386a881b560c658b7c552cc93fd06a7))
+
 ## v0.1.1 (2024-08-18)
 
 ### Fix
