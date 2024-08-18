@@ -68,9 +68,7 @@ def effects(
 def power_state(ctx: typer.Context) -> None:
     """Get the power state (on/off)."""
     exoyone = hp.get_exoyone(ctx.obj.host)
-    state = "[yellow]Unavailable[/]"
-    if exoyone.state is not None:
-        state = "[green]ON[/]" if exoyone.state.fadingOff else "[red]OFF[/]"
+    state = "[green]ON[/]" if exoyone.state.fadingOff else "[red]OFF[/]"
     rich.print(f"Power state: {state}")
 
 
@@ -78,9 +76,7 @@ def power_state(ctx: typer.Context) -> None:
 def music_sync(ctx: typer.Context) -> None:
     """Get music sync state (on/off)."""
     exoyone = hp.get_exoyone(ctx.obj.host)
-    state = "[yellow]Unavailable[/]"
-    if exoyone.state is not None:
-        state = "[green]ON[/]" if exoyone.state.musicSync else "[red]OFF[/]"
+    state = "[green]ON[/]" if exoyone.state.musicSync else "[red]OFF[/]"
     rich.print(f"Music sync: {state}")
 
 
@@ -88,9 +84,7 @@ def music_sync(ctx: typer.Context) -> None:
 def scene_generation(ctx: typer.Context) -> None:
     """Get scene generation state (on/off)."""
     exoyone = hp.get_exoyone(ctx.obj.host)
-    state = "[yellow]Unavailable[/]"
-    if exoyone.state is not None:
-        state = "[green]ON[/]" if exoyone.state.sceneGeneration else "[red]OFF[/]"
+    state = "[green]ON[/]" if exoyone.state.sceneGeneration else "[red]OFF[/]"
     rich.print(f"Scene generation: {state}")
 
 
@@ -98,9 +92,7 @@ def scene_generation(ctx: typer.Context) -> None:
 def powerbank_mode(ctx: typer.Context) -> None:
     """Get powered by powerbank state (on/off)."""
     exoyone = hp.get_exoyone(ctx.obj.host)
-    state = "[yellow]Unavailable[/]"
-    if exoyone.state is not None:
-        state = "[green]ON[/]" if exoyone.state.poweredByPowerbank else "[red]OFF[/]"
+    state = "[green]ON[/]" if exoyone.state.poweredByPowerbank else "[red]OFF[/]"
     rich.print(f"Powered by powerbank mode: {state}")
 
 
@@ -108,9 +100,7 @@ def powerbank_mode(ctx: typer.Context) -> None:
 def mode_cycle(ctx: typer.Context) -> None:
     """Get mode cycle state (on/off)."""
     exoyone = hp.get_exoyone(ctx.obj.host)
-    state = "[yellow]Unavailable[/]"
-    if exoyone.state is not None:
-        state = "[green]ON[/]" if exoyone.state.autoChange else "[red]OFF[/]"
+    state = "[green]ON[/]" if exoyone.state.autoChange else "[red]OFF[/]"
     rich.print(f"Mode cycle: {state}")
 
 
@@ -118,9 +108,7 @@ def mode_cycle(ctx: typer.Context) -> None:
 def cycle_speed(ctx: typer.Context) -> None:
     """Get the current effect speed."""
     exoyone = hp.get_exoyone(ctx.obj.host)
-    state = "Unavailable"
-    if exoyone.state is not None:
-        state = str(exoyone.state.cycleSpeed)
+    state = str(exoyone.state.cycleSpeed)
     rich.print(f"Current mode cycle speed: [yellow]{state}[/]")
 
 
@@ -128,9 +116,7 @@ def cycle_speed(ctx: typer.Context) -> None:
 def direction(ctx: typer.Context) -> None:
     """Get the effect direction (left/right)."""
     exoyone = hp.get_exoyone(ctx.obj.host)
-    state = "[yellow]Unavailable[/]"
-    if exoyone.state is not None:
-        state = "[green]LEFT[/]" if exoyone.state.direction else "[red]RIGHT[/]"
+    state = "[green]LEFT[/]" if exoyone.state.direction else "[red]RIGHT[/]"
     rich.print(f"Effect direction: {state}")
 
 
@@ -138,9 +124,7 @@ def direction(ctx: typer.Context) -> None:
 def effect_speed(ctx: typer.Context) -> None:
     """Get the current effect speed."""
     exoyone = hp.get_exoyone(ctx.obj.host)
-    state = "Unavailable"
-    if exoyone.state is not None:
-        state = str(exoyone.state.speed)
+    state = str(exoyone.state.speed)
     rich.print(f"Current effect speed: [yellow]{state}[/]")
 
 
@@ -148,13 +132,12 @@ def effect_speed(ctx: typer.Context) -> None:
 def shutdown_timer(ctx: typer.Context) -> None:
     """Get the current shutdown timer."""
     exoyone = hp.get_exoyone(ctx.obj.host)
-    shutdown_timer_output = "Shutdown timer: [yellow]Unavailable[/]"
-    if exoyone.state is not None:
-        if exoyone.state.shutdownTimer > 0:
-            minutes = int(exoyone.state.shutdownTimer / 60)
-            shutdown_timer_output = f"Shutdown timer: [yellow]{minutes} minutes[/]"
-        else:
-            shutdown_timer_output = "Shutdown timer: [red]Disabled[/]"
+    shutdown_timer_output = "Shutdown timer: "
+    if exoyone.state.shutdownTimer > 0:
+        minutes = int(exoyone.state.shutdownTimer / 60)
+        shutdown_timer_output = f"{shutdown_timer_output}[yellow]{minutes} minutes[/]"
+    else:
+        shutdown_timer_output = f"{shutdown_timer_output}[red]Disabled[/]"
     rich.print(shutdown_timer_output)
 
 
@@ -162,15 +145,12 @@ def shutdown_timer(ctx: typer.Context) -> None:
 def device_name(ctx: typer.Context) -> None:
     """Get the device name."""
     exoyone = hp.get_exoyone(ctx.obj.host)
-    dev_name = "[dim yellow]Unavailable[/]"
-    mdns_name = "[dim yellow]Unavailable[/]"
-    if exoyone.state is not None:
-        dev_name = (
-            f"[yellow]{exoyone.state.userDefinedName}[/]"
-            if exoyone.state.userDefinedName
-            else "[dim red]Unset[/]"
-        )
-        mdns_name = f"{exoyone.state.mdnsName}"
+    dev_name = (
+        f"[yellow]{exoyone.state.userDefinedName}[/]"
+        if exoyone.state.userDefinedName
+        else "[dim red]Unset[/]"
+    )
+    mdns_name = f"{exoyone.state.mdnsName}"
     rich.print(f"Device name: {dev_name}")
     rich.print(f"mDNS address: [blue]{mdns_name}[/]")
 
@@ -179,40 +159,40 @@ def device_name(ctx: typer.Context) -> None:
 def color(ctx: typer.Context) -> None:
     """Get the current hue, saturation and brightness values."""
     exoyone = hp.get_exoyone(ctx.obj.host)
-    if exoyone.state is not None:
-        console = Console()
-        hue = exoyone.state.hue
-        brightness = exoyone.state.brightness
-        saturation = exoyone.state.saturation
-        red, green, blue = hp.hsb_to_rgb(hue, saturation, brightness)
-        color_obj: Color = Color.from_rgb(red, green, blue)
 
-        console.print(
-            Text()
-            .append("RGB: ")
-            .append(f"{red:>3}", style=f"{color_obj.name}")
-            .append(", ")
-            .append(f"{green:>3}", style=f"{color_obj.name}")
-            .append(", ")
-            .append(f"{blue:>3}", style=f"{color_obj.name}")
-            .append(" [red, green, blue]", style="dim"),
-        )
-        console.print(
-            Text()
-            .append("HSB: ")
-            .append(f"{hue:>3}", style=f"{color_obj.name}")
-            .append(", ")
-            .append(f"{saturation:>3}", style=f"{color_obj.name}")
-            .append(", ")
-            .append(f"{brightness:>3}", style=f"{color_obj.name}")
-            .append(" [hue, saturation, brightness]", style="dim"),
-        )
-        console.print(
-            Text()
-            .append("CSS: ")
-            .append(f"{color_obj.name}", style=f"{color_obj.name}")
-            .append("       [HTML/CSS color]", style="dim"),
-        )
+    console = Console()
+    hue = exoyone.state.hue
+    brightness = exoyone.state.brightness
+    saturation = exoyone.state.saturation
+    red, green, blue = hp.hsb_to_rgb(hue, saturation, brightness)
+    color_obj: Color = Color.from_rgb(red, green, blue)
+
+    console.print(
+        Text()
+        .append("RGB: ")
+        .append(f"{red:>3}", style=f"{color_obj.name}")
+        .append(", ")
+        .append(f"{green:>3}", style=f"{color_obj.name}")
+        .append(", ")
+        .append(f"{blue:>3}", style=f"{color_obj.name}")
+        .append(" [red, green, blue]", style="dim"),
+    )
+    console.print(
+        Text()
+        .append("HSB: ")
+        .append(f"{hue:>3}", style=f"{color_obj.name}")
+        .append(", ")
+        .append(f"{saturation:>3}", style=f"{color_obj.name}")
+        .append(", ")
+        .append(f"{brightness:>3}", style=f"{color_obj.name}")
+        .append(" [hue, saturation, brightness]", style="dim"),
+    )
+    console.print(
+        Text()
+        .append("CSS: ")
+        .append(f"{color_obj.name}", style=f"{color_obj.name}")
+        .append("       [HTML/CSS color]", style="dim"),
+    )
 
 
 @app.command("everything")
@@ -222,8 +202,6 @@ def everything(
     """Get the state and value of all the things."""
     exoyone = hp.get_exoyone(ctx.obj.host)
     state = exoyone.state
-    if state is None:
-        return
 
     console = Console()
 

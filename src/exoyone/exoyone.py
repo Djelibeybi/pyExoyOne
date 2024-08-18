@@ -36,7 +36,7 @@ class ExoyOne:
         """Initialize the ExoyOne library."""
         self._host = host
         self._port = port
-        self._state: ExoyOneState | None = None
+        self._state: ExoyOneState
         self._mp = ModePacks()
 
     @property
@@ -47,28 +47,25 @@ class ExoyOne:
     @property
     def name(self) -> str:
         """Return either the user-defined name or mDNS name."""
-        name = ""
-        if self._state is not None:
-            name = self._state.mdnsName
-            if len(self._state.userDefinedName) > 0:
-                name = self._state.userDefinedName
+        name = self._state.mdnsName
+        if len(self._state.userDefinedName) > 0:
+            name = self._state.userDefinedName
         return name
 
     @property
-    def state(self) -> ExoyOneState | None:
+    def state(self) -> ExoyOneState:
         """Returns the in-memory state of the ExoyOne."""
         return self._state
 
     @property
     def device_type(self) -> str:
         """Return the device type."""
-        if self._state is not None:
-            return next(
-                name.replace("_", " ").title()
-                for name, value in ExoyDevices.__members__.items()
-                if value == self._state.type
-            )
-        return ""
+        device_type = next(
+            name.replace("_", " ").title()
+            for name, value in ExoyDevices.__members__.items()
+            if value == self._state.type
+        )
+        return device_type
 
     @staticmethod
     def _bool_val(value: bool | int | str) -> int:
@@ -127,25 +124,18 @@ class ExoyOne:
 
     def get_active_pack_name(self) -> str:
         """Return the name of the currently active modpack."""
-        if self._state is not None:
-            return self._mp.get_pack_name_from_index(self._state.currentModpack)
-        return ""
+        return self._mp.get_pack_name_from_index(self._state.currentModpack)
 
     def get_active_effect(self) -> str:
         """Return the name of the currently active effect."""
-        effect_name: str = ""
-        if self._state is not None:
-            effect_name = self._mp.get_effect_name_from_index(
-                pack_index=self._state.currentModpack,
-                effect_index=self._state.modeIndex,
-            )
-        return effect_name
+        return self._mp.get_effect_name_from_index(
+            pack_index=self._state.currentModpack,
+            effect_index=self._state.modeIndex,
+        )
 
     def get_state(self) -> dict[str, dict[str, int | str | tuple[int, int, int]]]:
         """Return the current state in a human-readable format."""
-        if self._state is not None:
-            return self._state.friendly
-        return {}
+        return self._state.friendly
 
     async def restart_in_ap_mode(self) -> None:
         """Restart the device in AP mode."""
@@ -172,7 +162,11 @@ class ExoyOne:
         saturation = max(0, min(hsb[1], 255))
         brightness = max(0, min(hsb[2], 255))
         await self.async_set_data(
-            {"setHue": hue, "setSaturation": saturation, "setBrightness": brightness}
+            {
+                "setHue": hue,
+                "setSaturation": saturation,
+                "setBrightness": brightness,
+            }
         )
 
     async def set_hue(self, hue: int) -> None:
@@ -214,7 +208,10 @@ class ExoyOne:
 
         if pack_index > -1 and effect_index > -1:
             await self.async_set_data(
-                {"setModPack": pack_index, "setEffect": effect_index}
+                {
+                    "setModPack": pack_index,
+                    "setEffect": effect_index,
+                }
             )
 
     async def toggle_scene_generation(self, state: bool | int | str) -> None:
