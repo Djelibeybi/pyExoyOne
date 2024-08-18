@@ -1,4 +1,5 @@
 # type: ignore
+
 import random
 from unittest.mock import patch
 
@@ -33,14 +34,12 @@ class TestExoyOne:
         assert isinstance(exoyone.state.as_dict(), dict)
         assert exoyone.state.mdnsName.startswith("exoyone")
 
-        friendly_state = exoyone.get_state()
-        assert len(friendly_state) == 4
-        assert "Hardware Details" in friendly_state.keys()
-        assert len(friendly_state["Hardware Details"]) == 2
+        exoyone_state = await exoyone.async_get_state()
+        assert isinstance(exoyone_state, ExoyOneState)
+        assert exoyone_state == exoyone.state
 
     async def test_host(self, exoyone):
         """Test the host is set correctly."""
-        await exoyone.async_get_data()
         assert exoyone.host == "127.0.0.1"
 
     async def test_host_error(self):
@@ -54,13 +53,10 @@ class TestExoyOne:
 
     async def test_device_type(self, exoyone):
         """Test the device type is returned."""
-        await exoyone.async_get_data()
         assert exoyone.device_type == "Ultra Dense Dodecahedron"
 
     async def test_name(self, exoyone):
         """Test the device name and user defined names are returned."""
-        await exoyone.async_get_data()
-
         original_name = exoyone.name
         assert original_name is not None
 
@@ -73,8 +69,6 @@ class TestExoyOne:
 
     async def test_name_too_long(self, exoyone):
         """Test the device name and user defined names are returned."""
-        await exoyone.async_get_data()
-
         original_name = exoyone.name
         new_name = "exoyone1A-exoyone1B-exoyone1C-exoyone1D-exoyone1E"
         await exoyone.set_name(new_name)
@@ -88,74 +82,65 @@ class TestExoyOne:
     )
     async def test_power_state(self, exoyone, set_state, expected_state):
         """Test power state."""
-        await exoyone.async_get_data()
-
         await exoyone.toggle_power(set_state)
         assert exoyone.state.fadingOff == expected_state
 
     async def test_direction(self, exoyone):
         """Test direction."""
-        await exoyone.async_get_data()
-
         this_state = exoyone.state.direction
         next_state = bool(not this_state)
         await exoyone.toggle_direction(next_state)
         assert exoyone.state.direction == next_state
 
-    async def test_mode_cycle(self, exoyone):
+    @pytest.mark.parametrize(
+        "set_state, expected_state",
+        [("on", True), ("off", False), (1, True), (0, False)],
+    )
+    async def test_mode_cycle(self, exoyone, set_state, expected_state):
         """Test direction."""
-        await exoyone.async_get_data()
+        await exoyone.toggle_mode_cycle(set_state)
+        assert exoyone.state.autoChange == expected_state
 
-        this_state = exoyone.state.autoChange
-        next_state = bool(not this_state)
-        await exoyone.toggle_mode_cycle(next_state)
-        assert exoyone.state.autoChange == next_state
-
-    async def test_music_sync(self, exoyone):
+    @pytest.mark.parametrize(
+        "set_state, expected_state",
+        [("on", True), ("off", False), (1, True), (0, False)],
+    )
+    async def test_music_sync(self, exoyone, set_state, expected_state):
         """Test direction."""
-        await exoyone.async_get_data()
+        await exoyone.toggle_music_sync(set_state)
+        assert exoyone.state.musicSync == expected_state
 
-        this_state = exoyone.state.musicSync
-        next_state = bool(not this_state)
-        await exoyone.toggle_music_sync(next_state)
-        assert exoyone.state.musicSync == next_state
-
-    async def test_scene_generation(self, exoyone):
+    @pytest.mark.parametrize(
+        "set_state, expected_state",
+        [("on", True), ("off", False), (1, True), (0, False)],
+    )
+    async def test_scene_generation(self, exoyone, set_state, expected_state):
         """Test direction."""
-        await exoyone.async_get_data()
+        await exoyone.toggle_scene_generation(set_state)
+        assert exoyone.state.sceneGeneration == expected_state
 
-        this_state = exoyone.state.sceneGeneration
-        next_state = bool(not this_state)
-        await exoyone.toggle_scene_generation(next_state)
-        assert exoyone.state.sceneGeneration == next_state
-
-    async def test_powered_by_powerbank(self, exoyone):
+    @pytest.mark.parametrize(
+        "set_state, expected_state",
+        [("on", True), ("off", False), (1, True), (0, False)],
+    )
+    async def test_powered_by_powerbank(self, exoyone, set_state, expected_state):
         """Test direction."""
-        await exoyone.async_get_data()
-
-        this_state = exoyone.state.poweredByPowerbank
-        next_state = bool(not this_state)
-        await exoyone.powered_by_powerbank(next_state)
-        assert exoyone.state.poweredByPowerbank == next_state
+        await exoyone.powered_by_powerbank(set_state)
+        assert exoyone.state.poweredByPowerbank == expected_state
 
     @pytest.mark.parametrize("word,expected", word_test_params)
     async def test_truthy_falsy_words(self, exoyone, word, expected):
         """Test all the truthy and falsy words."""
-        await exoyone.async_get_data()
-
         await exoyone.toggle_power(word)
         assert exoyone.state.fadingOff is expected
 
     async def test_invalid_truthy_falsy_word(self, exoyone):
-        await exoyone.async_get_data()
-
+        """Test invalid truthy and falsy word."""
         with pytest.raises(ExoyOneValueError):
             await exoyone.toggle_power("east")
 
     async def test_set_color(self, exoyone):
         """Test setting hue, saturation and brightness."""
-        await exoyone.async_get_data()
-
         old_hue = exoyone.state.hue
         old_sat = exoyone.state.saturation
         old_bri = exoyone.state.brightness
@@ -178,17 +163,13 @@ class TestExoyOne:
         assert exoyone.state.brightness == old_bri
 
     async def test_set_speed(self, exoyone):
-        """Test setting speed."""
-        await exoyone.async_get_data()
-
+        """Test setting effect speed."""
         new_speed = random.randint(0, 255)
         await exoyone.set_speed(new_speed)
         assert exoyone.state.speed == new_speed
 
     async def test_set_cycle_speed(self, exoyone):
-        """Test setting speed."""
-        await exoyone.async_get_data()
-
+        """Test setting mode cycle speed."""
         new_cycle_speed = random.randint(0, 255)
         await exoyone.set_cycle_speed(new_cycle_speed)
         assert exoyone.state.cycleSpeed == new_cycle_speed
@@ -200,8 +181,6 @@ class TestExoyOne:
         self, exoyone, effect, expected_pn, expected_pi, expected_ei
     ):
         """Test setting effect."""
-        await exoyone.async_get_data()
-
         pi, ei = mp.get_indices_from_effect_name(effect)
         en = mp.get_effect_name_from_index(pi, ei)
 
@@ -219,8 +198,6 @@ class TestExoyOne:
 
     async def test_invalid_effect_name(self, exoyone):
         """Test invalid effect name."""
-        await exoyone.async_get_data()
-
         mode_pack = exoyone.get_active_pack_name()
         effect = exoyone.get_active_effect()
 
@@ -245,8 +222,6 @@ class TestExoyOne:
 
     async def test_set_shutdown_timer(self, exoyone):
         """Test setting shutdown timer."""
-        await exoyone.async_get_data()
-
         minutes = 30
         await exoyone.set_shutdown_timer(minutes)
         assert exoyone.state.shutdownTimer == 1800
@@ -265,8 +240,6 @@ class TestExoyOne:
 
     async def test_connect_to_wifi(self, exoyone):
         """Test connecting to Wi-Fi."""
-        await exoyone.async_get_data()
-
         with pytest.raises(ExoyOneValueError):
             ssid = ""
             pswd = ""
@@ -292,8 +265,6 @@ class TestExoyOne:
 
     async def test_experimental_settings(self, exoyone):
         """Test experimental settings."""
-        await exoyone.async_get_data()
-
         new_pattern = random.randint(0, 255)
         await exoyone.set_pattern(new_pattern)
         assert exoyone.state.selectedPattern == new_pattern
