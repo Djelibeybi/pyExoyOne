@@ -8,20 +8,34 @@ readme = "README.md"
 repository = "https://github.com/Djelibeybi/pyExoyOne"
 documentation = "https://github.com/Djelibeybi/pyExoyOne"
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Framework :: AsyncIO",
+    "Framework :: MkDocs",
+    "Framework :: Pytest",
     "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Home Automation",
     "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+    "Typing :: Typed",
 ]
+keywords = ["exoy", "exoyone", "infinite-dodecahedron"]
 packages = [
     { include = "exoyone", from = "src" },
-    { include = "moxyone", from = "tests"}
+    { include = "moxyone", from = "tests" },
 ]
 
 [tool.poetry.urls]
-"Bug Tracker" = "https://github.com/Djelibeybi/pyexoyone/issues"
-"Changelog" = "https://github.com/Djelibeybi/pyexoyone/blob/main/CHANGELOG.md"
+Homepage = "https://djelibeybi.github.io/pyExoyOne/"
+Changelog = "https://github.com/Djelibeybi/pyExoyOne/blob/main/CHANGELOG.md"
+Documentation = "https://djelibeybi.github.io/pyExoyOne/"
+Issues = "https://github.com/Djelibeybi/pyExoyOne/issues"
+Repository = "https://github.com/Djelibeybi/pyExoyOne/"
 
 [tool.poetry.scripts]
 exoyone = "exoyone.__main__:app"
@@ -38,7 +52,7 @@ backoff = "^2.2.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
-ruff = "^0.5.6"
+ruff = "^0.6.1"
 ruff-lsp = "^0.0.55"
 pre-commit = "^3.8.0"
 pytest-asyncio = "^0.23.8"
@@ -53,21 +67,16 @@ optional = true
 mkdocs = "^1.6.0"
 mkdocs-material = "^9.5.31"
 mkdocs-typer = "^0.0.3"
-mkdocstrings = {extras = ["python"], version = "^0.25.2"}
+mkdocstrings = { extras = ["python"], version = "^0.25.2" }
 mkdocs-git-revision-date-localized-plugin = "^1.2.6"
 
 [tool.semantic_release]
 version_toml = ["pyproject.toml:tool.poetry.version"]
-version_variables = [
-    "src/exoyone/__init__.py:__version__",
-]
+version_variables = ["src/exoyone/__init__.py:__version__"]
 build_command = "pip install poetry && poetry build"
 
 [tool.semantic_release.changelog]
-exclude_commit_patterns = [
-    "chore*",
-    "ci*",
-]
+exclude_commit_patterns = ["chore*", "ci*"]
 
 [tool.semantic_release.changelog.environment]
 keep_trailing_newline = true
@@ -138,14 +147,7 @@ select = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**/*" = [
-    "D100",
-    "D101",
-    "D102",
-    "D103",
-    "D104",
-    "S101",
-]
+"tests/**/*" = ["D100", "D101", "D102", "D103", "D104", "S101"]
 "setup.py" = ["D100"]
 "conftest.py" = ["D100"]
 "docs/conf.py" = ["D100"]
@@ -163,14 +165,11 @@ no_implicit_optional = true
 show_error_codes = true
 warn_unreachable = true
 warn_unused_ignores = true
-exclude = [
-    'docs/.*',
-    'setup.py',
-]
+exclude = ['docs/.*', 'setup.py']
 
 [[tool.mypy.overrides]]
 module = "tests.*"
-allow_untyped_defs = true
+disallow_untyped_defs = false
 
 [[tool.mypy.overrides]]
 module = "docs.*"
