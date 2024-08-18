@@ -86,13 +86,14 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref || github.ref_name }}
+          token: ${{ secrets.GH_PAT }}
 
       # Do a dry run of PSR
       - name: Test release
         uses: python-semantic-release/python-semantic-release@v9.8.6
         if: github.ref_name != 'main'
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
           root_options: --noop
 
       # On main branch: actual PSR + upload to PyPI & GitHub
@@ -101,7 +102,7 @@ jobs:
         id: release
         if: github.ref_name == 'main'
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
@@ -111,4 +112,4 @@ jobs:
         uses: python-semantic-release/upload-to-gh-release@main
         if: steps.release.outputs.released == 'true'
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
