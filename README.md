@@ -54,8 +54,19 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- prettier-ignore-start -->
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<!-- markdownlint-enable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://omg.dje.li"><img src="https://avatars.githubusercontent.com/u/103232?v=4?s=80" width="80px;" alt="Avi Miller"/><br /><sub><b>Avi Miller</b></sub></a><br /><a href="https://github.com/Djelibeybi/pyExoyOne/commits?author=Djelibeybi" title="Code">💻</a> <a href="https://github.com/Djelibeybi/pyExoyOne/commits?author=Djelibeybi" title="Documentation">📖</a> <a href="#question-Djelibeybi" title="Answering Questions">💬</a> <a href="https://github.com/Djelibeybi/pyExoyOne/pulls?q=is%3Apr+reviewed-by%3ADjelibeybi" title="Reviewed Pull Requests">👀</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 <!-- prettier-ignore-end -->
 
