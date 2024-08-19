@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.3 (2024-08-19)
+
+### Fix
+
+- Suppress shutdown timer logs ([`14e7c57`](https://github.com/Djelibeybi/pyExoyOne/commit/14e7c57f25122f8ee05fdd79eef598f439172ed2))
+
 ## v0.1.2 (2024-08-18)
 
 ### Fix
