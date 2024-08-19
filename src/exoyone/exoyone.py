@@ -224,15 +224,17 @@ class ExoyOne:
 
     async def set_shutdown_timer(self, minutes: int) -> None:
         """Set a shutdown timer of at least 5 and at most 480 minutes."""
+        minutes = int(minutes)
+
         if minutes == 0:
-            _LOGGER.info("Disabling shutdown timer.")
+            _LOGGER.debug("Disabling shutdown timer.")
 
         elif 1 < minutes < 5:
-            _LOGGER.info("Shutdown timer increased to 5 minutes.")
+            _LOGGER.debug("Shutdown timer set to minimum duration of 5 minutes.")
             minutes = 5
 
         if minutes > 480:
-            _LOGGER.info("Shutdown timer reduced to 8 hours.")
+            _LOGGER.debug("Shutdown timer set to maximum duration of 8 hours.")
             minutes = 480
 
         hours: int = 0
