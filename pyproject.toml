@@ -53,7 +53,7 @@ backoff = "^2.2.1"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
 ruff = "^0.6.1"
-ruff-lsp = "^0.0.55"
+ruff-lsp = "^0.0.56"
 pre-commit = "^3.8.0"
 pytest-asyncio = "^0.24.0"
 pytest-xprocess = "^1.0.2"
