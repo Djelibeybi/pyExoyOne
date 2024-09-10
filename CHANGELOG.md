@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.8 (2024-09-10)
+
+### Fix
+
+- Update dependency rich to v13.8.1 ([`977543c`](https://github.com/Djelibeybi/pyExoyOne/commit/977543c088803045d726c9a7519af0bc262aa8ab))
+
 ## v0.1.7 (2024-09-08)
 
 ### Fix
