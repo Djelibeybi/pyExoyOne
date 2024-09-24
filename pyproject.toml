@@ -44,7 +44,7 @@ moxyone = "moxyone.__main__:app"
 [tool.poetry.dependencies]
 python = "^3.12"
 rich = ">=10"
-zeroconf = "^0.134.0"
+zeroconf = "^0.135.0"
 camel-converter = "^3.1.2"
 typer = "^0.12.3"
 asyncio-dgram = "^2.2.0"
