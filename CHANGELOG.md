@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.11 (2024-10-01)
+
+### Fix
+
+- Update dependency camel-converter to v4 ([`cbbe07c`](https://github.com/Djelibeybi/pyExoyOne/commit/cbbe07ca1a7b3c62078151c13b4750c2a6ab8634))
+
 ## v0.1.10 (2024-10-01)
 
 ### Fix
