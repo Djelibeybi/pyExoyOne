@@ -1589,13 +1589,13 @@ watchmedo = ["PyYAML (>=3.10)"]
 
 [[package]]
 name = "zeroconf"
-version = "0.137.2"
+version = "0.139.0"
 description = "A pure python implementation of multicast DNS service discovery"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "zeroconf-0.137.2-cp312-cp312-manylinux_2_36_x86_64.whl", hash = "sha256:51a9d6c612b9eecfcaa715bcee292b8e7ece0f68088f4c9a50f69ea601e983bf"},
-    {file = "zeroconf-0.137.2.tar.gz", hash = "sha256:50fd3f537138e4c0b46703acb57cc23e31cb44d620b9b499f2d43987ed6554b7"},
+    {file = "zeroconf-0.139.0-cp312-cp312-manylinux_2_36_x86_64.whl", hash = "sha256:852fa1310c7ef7b4aa403b20267d71fc22191c2b8115c5e8f5a96a645d45fd21"},
+    {file = "zeroconf-0.139.0.tar.gz", hash = "sha256:2cfb4ef130aac602c9ed428a52243597ed248cf0d22ac4e2b21d90541de90684"},
 ]
 
 [package.dependencies]
@@ -1604,4 +1604,4 @@ ifaddr = ">=0.1.7"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "80c066a71eaf5447352537f42627af80acceeae0269fa0f6150b3a23a2a01493"
+content-hash = "62f540f83664011ee084634a69b3644c54a8811cf61aa099e2edd5f239b3061c"
