@@ -83,7 +83,7 @@ def send_request_with_progress(
                 return
 
     asyncio.run(_with_progress())
-    rich.print(f"{description.removesuffix("...")}: [green]DONE[/green]")
+    rich.print(f"{description.removesuffix('...')}: [green]DONE[/green]")
 
 
 def get_exoyone(host: str) -> ExoyOne:
