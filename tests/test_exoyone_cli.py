@@ -8,7 +8,7 @@ from typer.testing import CliRunner
 from exoyone.cli import app
 from exoyone.models import mode_packs
 
-runner = CliRunner()
+runner = CliRunner(env={"EXOYONE_HOST": "127.0.0.1"})
 mp = mode_packs
 
 pack_effects_params: list[tuple[str, list[str]]] = []
@@ -46,23 +46,24 @@ direction_states: list[tuple[str, bool]] = [
 random.shuffle(direction_states)
 
 
-@pytest.mark.usefixtures("set_host_envvar", "run_moxyone")
+@pytest.mark.usefixtures("run_moxyone")
 class TestExoyOneCli:
     """Test the ExoyOne CLI."""
 
-    @pytest.mark.parametrize("set_host_envvar", ["override"])
-    def test_exoyone_cli_no_envvar(self, set_host_envvar):
+    def test_exoyone_cli_no_envvar(self):
         """Test ExoyOne CLI without the environment variable."""
-        result = runner.invoke(app, ["get"])
+        new_runner = CliRunner()
+
+        result = new_runner.invoke(app, ["get"])
         assert result.exit_code == 0
 
-        result = runner.invoke(app, ["get", "--help"])
+        result = new_runner.invoke(app, ["get", "--help"])
         assert result.exit_code == 0
 
-        result = runner.invoke(app, ["set"])
+        result = new_runner.invoke(app, ["set"])
         assert result.exit_code == 0
 
-        result = runner.invoke(app, ["set", "--help"])
+        result = new_runner.invoke(app, ["set", "--help"])
         assert result.exit_code == 0
 
     def test_exoyone_cli(self):
@@ -192,7 +193,7 @@ class TestExoyOneCli:
             assert effect in result.stdout
 
     @pytest.mark.parametrize("effect, mode_pack", set_effects_params)
-    def test_set_effect_by_name(self, exoyone, effect, mode_pack):
+    def test_set_effect_by_name(self, effect, mode_pack):
         """Test invoking the set effect command."""
         result = runner.invoke(app, ["set", "effect", effect])
         assert result.exit_code == 0
