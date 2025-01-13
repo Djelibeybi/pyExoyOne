@@ -24,7 +24,6 @@ random.shuffle(effect_test_params)
 
 
 @pytest.mark.usefixtures("run_moxyone")
-@pytest.mark.asyncio
 class TestExoyOne:
     """Test the ExoyOne class."""
 

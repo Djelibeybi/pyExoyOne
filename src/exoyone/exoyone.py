@@ -6,10 +6,10 @@ import asyncio
 import json
 import logging
 from collections.abc import Mapping
-from typing import ClassVar
+from typing import TYPE_CHECKING, ClassVar
 
+import asyncio_dgram
 import backoff
-from asyncio_dgram.aio import DatagramClient, connect
 
 from . import __version__
 from .models import (
@@ -21,8 +21,10 @@ from .models import (
 )
 from .state import ExoyOneState
 
+if TYPE_CHECKING:
+    from asyncio_dgram import DatagramClient
+
 _LOGGER = logging.getLogger(__package__)
-_GET_DATA = b'{"getData": 1}'
 
 pyexoyone_version = __version__
 
@@ -66,7 +68,7 @@ class ExoyOne:
     @staticmethod
     def _bool_val(value: bool | int | str) -> int:
         """Return 1 for truthy state or 0 for falsy state."""
-        if isinstance(value, int):
+        if isinstance(value, bool) or isinstance(value, int):
             return value
 
         if isinstance(value, str) and value.upper() in TruthyFalsyWords.__members__:
@@ -87,14 +89,15 @@ class ExoyOne:
         """Update a setting on the ExoyOne, then get the latest state data."""
         encoded_update = json.dumps(request).encode("utf-8")
         try:
-            stream: DatagramClient = await connect((self._host, self._port))
+            stream: DatagramClient = await asyncio_dgram.connect(
+                (self._host, self._port)
+            )
             await asyncio.wait_for(stream.send(encoded_update), timeout=self.TIMEOUT)
+            stream.close()
+            await asyncio.sleep(0.1)
+            await self.async_get_data()
         except TimeoutError as exc:
             raise ExoyOneTimeoutError() from exc
-        finally:
-            stream.close()
-            del stream
-            await self.async_get_data()
 
     @backoff.on_exception(
         backoff.expo,
@@ -106,16 +109,16 @@ class ExoyOne:
     async def async_get_data(self) -> None:
         """Update the in-memory state using data from the ExoyOne."""
         try:
-            stream: DatagramClient = await connect((self._host, self._port))
+            stream: DatagramClient = await asyncio_dgram.connect(
+                (self._host, self._port)
+            )
             await asyncio.wait_for(stream.send(b'{"getData": 1}'), timeout=self.TIMEOUT)
             reply, _ = await asyncio.wait_for(stream.recv(), timeout=self.TIMEOUT)
             data = json.loads(reply.decode("utf-8"))
             self._state = ExoyOneState(**data)
+            stream.close()
         except TimeoutError as exc:
             raise ExoyOneTimeoutError() from exc
-        finally:
-            stream.close()
-            del stream
 
     def get_active_pack_name(self) -> str:
         """Return the name of the currently active modpack."""

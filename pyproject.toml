@@ -101,6 +101,8 @@ addopts = """\
     --junitxml=junit.xml
     """
 pythonpath = ["src"]
+asyncio_default_fixture_loop_scope = "session"
+asyncio_mode = "auto"
 log_cli = true
 filterwarnings = [
     "error",

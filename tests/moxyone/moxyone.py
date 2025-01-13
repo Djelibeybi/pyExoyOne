@@ -79,7 +79,7 @@ class MoxyOneState:
 class MoxyOne:
     """A mock ExoyOne device."""
 
-    def __init__(self, logger: logging.Logger, delay: bool = False) -> None:
+    def __init__(self, logger: logging.Logger) -> None:
         """Initialize MoxyOne."""
         self._state = MoxyOneState(
             mdnsName=f"exoyone{random.randint(12345, 67890):05d}"
@@ -88,7 +88,6 @@ class MoxyOne:
         self._lock = asyncio.Lock()
         self._logger = logger
         self._timeout: float = 0.1
-        self._delay = delay
 
     async def serve(self) -> None:
         """Start responding to requests."""
@@ -113,7 +112,6 @@ class MoxyOne:
                             elif key == "setShutdownTimer":
                                 value = value.get("minutes") + (value.get("hours") * 60)
                                 param = param
-
                             elif key == "cycleSpeed":
                                 value = value.get("minutes") + (value.get("hours") * 60)
                                 param = param
@@ -130,8 +128,6 @@ class MoxyOne:
                             self._logger.info("Ignoring %s", key)
                             continue
                 elif request.get("getData", False) == 1:
-                    if self._delay:
-                        await asyncio.sleep(0.6)
                     self._logger.info(
                         "Sending %s to %s", self._state.as_dict(), remote_addr
                     )
@@ -151,7 +147,6 @@ def serve(ctx: typer.Context) -> None:
     loop = asyncio.get_event_loop()
     logger = ctx.obj.get("logger")
     moxyone = MoxyOne(logger)
-
     task = loop.create_task(moxyone.serve())
 
     try:
@@ -166,7 +161,6 @@ def serve(ctx: typer.Context) -> None:
 def main(
     ctx: typer.Context,
     debug: Annotated[bool, typer.Option("--debug")] = False,
-    delay: Annotated[bool, typer.Option("--delay")] = False,
 ) -> None:
     logging.basicConfig(
         level=logging.INFO,
@@ -182,9 +176,6 @@ def main(
 
     ctx.ensure_object(dict)
     ctx.obj["logger"] = _LOGGER
-
-    if delay:
-        ctx.obj["delay"] = True
 
 
 if __name__ == "__main__":
