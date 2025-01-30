@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyExoyOne"
-version = "0.1.27"
+version = "0.1.28"
 description = "Python library to configure and control the Exoy(tm) ONE."
 authors = ["Avi Miller <me@dje.li>"]
 license = "MIT"
