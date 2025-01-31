@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.29 (2025-01-31)
+
+### Bug fixes
+
+- Update dependency zeroconf to ^0.143.0 ([`acbcd0b`](https://github.com/Djelibeybi/pyExoyOne/commit/acbcd0b25347e33e47e6848bee6ee2ae86ae8bfc))
+
 ## v0.1.28 (2025-01-30)
 
 ### Bug fixes
