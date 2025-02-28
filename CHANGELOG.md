@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.34 (2025-02-28)
+
+### Bug fixes
+
+- Update dependency typer to v0.15.2 (#230) ([`a2f9580`](https://github.com/Djelibeybi/pyExoyOne/commit/a2f958012eb16f6f9457823b2745c5ca3bfc9163))
+
 ## v0.1.33 (2025-02-18)
 
 ### Bug fixes
