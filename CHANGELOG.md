@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.36 (2025-03-30)
+
+### Bug fixes
+
+- Update dependency rich to v14 ([`a795fad`](https://github.com/Djelibeybi/pyExoyOne/commit/a795fad0c7c0fcef105d217a0fefdd0abe516380))
+
 ## v0.1.35 (2025-03-05)
 
 ### Bug fixes
