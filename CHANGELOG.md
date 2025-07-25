@@ -4,7 +4,7 @@
 
 ### Bug fixes
 
-- Update dependency rich to v14.1.0 ([`46b3d38`](https://github.com/Djelibeybi/pyExoyOne/commit/46b3d38a5ccfc8f1100d6ab844ac383a5a5b045d))
+- Update dependency rich to v14.1.0 ([`ccc440d`](https://github.com/Djelibeybi/pyExoyOne/commit/ccc440d01f0a98ac347718a722f5060ea03fe1cb))
 
 ## v1.0.0 (2025-05-28)
 
