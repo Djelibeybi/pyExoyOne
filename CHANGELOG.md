@@ -1,10 +1,10 @@
 # Changelog
 
-## v1.0.7-rc.1 (2025-09-21)
+## v1.0.7 (2025-09-21)
 
 ### Bug fixes
 
-- Update dependency typer to ^0.19.0 ([`71e8efb`](https://github.com/Djelibeybi/pyExoyOne/commit/71e8efb6253bf4e37501fd48f350d7c8da98144f))
+- Update dependency typer to ^0.19.0 ([`3c1328e`](https://github.com/Djelibeybi/pyExoyOne/commit/3c1328ea0306e5cc427db1df993866af1cc1633e))
 
 ## v1.0.6 (2025-09-21)
 
