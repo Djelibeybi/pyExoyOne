@@ -1,4 +1,4 @@
-__version__ = "1.0.6"
+__version__ = "1.0.7rc.1"
 
 from .exoyone import ExoyOne
 from .models import (
