@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyExoyOne"
-version = "1.0.8"
+version = "1.0.9-rc.1"
 description = "Python library to configure and control the Exoy(tm) ONE."
 authors = ["Avi Miller <me@dje.li>"]
 license = "MIT"
@@ -44,7 +44,7 @@ moxyone = "moxyone.__main__:app"
 [tool.poetry.dependencies]
 python = "^3.12"
 rich = ">=10"
-zeroconf = "^0.147.0"
+zeroconf = "^1.0.0"
 camel-converter = "^4.0.0"
 typer = "^0.19.0"
 asyncio-dgram = "^2.2.0"
