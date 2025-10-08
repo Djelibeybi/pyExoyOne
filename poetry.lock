@@ -86,14 +86,14 @@ extras = ["regex"]
 
 [[package]]
 name = "camel-converter"
-version = "4.0.1"
+version = "5.0.0"
 description = "Converts a string from snake case to camel case or camel case to snake case"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "camel_converter-4.0.1-py3-none-any.whl", hash = "sha256:0cba7ca1354a29ca2191983deecc9dcf28889f606c28d6ed18ac7d4586b163ac"},
-    {file = "camel_converter-4.0.1.tar.gz", hash = "sha256:401414549ae4ac4073e38cdc4aa6d464dc534fc40aa06ff787bf0960b0c86535"},
+    {file = "camel_converter-5.0.0-py3-none-any.whl", hash = "sha256:5a64900bcba1ca047c504ee88cefa905a5bcac15cec06f6d6f9d1ebad46d4e80"},
+    {file = "camel_converter-5.0.0.tar.gz", hash = "sha256:97d0cf15a75b40abab288c526c71143b468376dd61690fd1cb0a49d9e471f111"},
 ]
 
 [package.extras]
@@ -1688,4 +1688,4 @@ ifaddr = ">=0.1.7"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "affa178684f5480e7b1f1bf7edc855f21027d0961bd8c57ef2cdaa158bb9084b"
+content-hash = "ed740ff328d631f3eabf499c018c82f4c45705398f3061767861d7131881a9a5"
