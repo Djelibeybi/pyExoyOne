@@ -1,10 +1,10 @@
 # Changelog
 
-## v1.0.10-rc.1 (2025-10-08)
+## v1.0.10 (2025-10-08)
 
 ### Bug fixes
 
-- Update dependency camel-converter to v5 ([`38bb736`](https://github.com/Djelibeybi/pyExoyOne/commit/38bb736b447100314b5efcce92033d3c34aeb7ed))
+- Update dependency camel-converter to v5 ([`7684c4c`](https://github.com/Djelibeybi/pyExoyOne/commit/7684c4cbad2a1a762972d7ab90581e0add37aac1))
 
 ## v1.0.9 (2025-10-05)
 
