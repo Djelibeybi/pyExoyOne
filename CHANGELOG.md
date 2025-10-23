@@ -1,10 +1,10 @@
 # Changelog
 
-## v1.0.11-rc.1 (2025-10-20)
+## v1.0.11 (2025-10-23)
 
 ### Bug fixes
 
-- Update dependency typer to ^0.20.0 ([`e101f17`](https://github.com/Djelibeybi/pyExoyOne/commit/e101f17d62551af85bef3dd7f906378323864b3d))
+- Update dependency typer to ^0.20.0 ([`92d77ac`](https://github.com/Djelibeybi/pyExoyOne/commit/92d77acaa695c6dda0d2839e56e3d7255629bb0f))
 
 ## v1.0.10 (2025-10-08)
 
