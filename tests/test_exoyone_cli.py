@@ -55,13 +55,13 @@ class TestExoyOneCli:
         new_runner = CliRunner()
 
         result = new_runner.invoke(app, ["get"])
-        assert result.exit_code == 0
+        assert result.exit_code == 2
 
         result = new_runner.invoke(app, ["get", "--help"])
         assert result.exit_code == 0
 
         result = new_runner.invoke(app, ["set"])
-        assert result.exit_code == 0
+        assert result.exit_code == 2
 
         result = new_runner.invoke(app, ["set", "--help"])
         assert result.exit_code == 0
@@ -75,7 +75,7 @@ class TestExoyOneCli:
     def test_get(self):
         """Test invoking the get command without parameters."""
         result = runner.invoke(app, ["get"])
-        assert result.exit_code == 0
+        assert result.exit_code == 2
         assert "Get information from your ExoyOne" in result.stdout
 
     def test_get_help(self):
@@ -87,7 +87,7 @@ class TestExoyOneCli:
     def test_set(self):
         """Test invoking the set command without parameters."""
         result = runner.invoke(app, ["set"])
-        assert result.exit_code == 0
+        assert result.exit_code == 2
         assert "Change things on your ExoyOne" in result.stdout
 
     def test_set_help(self):
@@ -206,13 +206,13 @@ class TestExoyOneCli:
         """Test invoking the set effect command with an invalid effect."""
         result = runner.invoke(app, ["set", "effect", "invalid_effect"])
         assert result.exit_code == 2
-        assert "Invalid value for '[EFFECT]'" in result.stdout
+        assert "Invalid value for '[EFFECT]'" in result.stderr
 
     def test_set_effect_no_effect(self):
         """Test invoking the set effect command without an effect."""
         result = runner.invoke(app, ["set", "effect"])
         assert result.exit_code == 2
-        assert "Missing argument '[EFFECT]'" in result.stdout
+        assert "Missing argument '[EFFECT]'" in result.stderr
 
     def test_set_effect_speed(self):
         """Test invoking the set speed command."""
