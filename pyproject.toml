@@ -47,7 +47,7 @@ rich = ">=10"
 zeroconf = "^0.148.0"
 camel-converter = "^5.0.0"
 typer = "^0.21.0"
-asyncio-dgram = "^2.2.0"
+asyncio-dgram = "^3.0.0"
 backoff = "^2.2.1"
 
 [tool.poetry.group.dev.dependencies]
