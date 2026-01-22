@@ -9,12 +9,14 @@ pyExoyOne is a Python library and CLI for configuring and controlling Exoy™ ON
 ## Commands
 
 ### Development Setup
+
 ```bash
 uv sync --all-groups        # Install all dependencies
 uv run pre-commit install   # Set up git hooks
 ```
 
 ### Testing
+
 ```bash
 uv run pytest                              # Run all tests with coverage
 uv run pytest tests/test_exoyone.py        # Run specific test file
@@ -23,6 +25,7 @@ uv run moxyone serve                       # Run mock device server standalone
 ```
 
 ### Code Quality
+
 ```bash
 uv run ruff check --fix    # Lint and auto-fix
 uv run ruff format         # Format code
@@ -31,6 +34,7 @@ uv run pre-commit run -a   # Run all checks (ruff, ty, prettier, codespell)
 ```
 
 ### Documentation
+
 ```bash
 uv sync --all-groups       # Install docs dependencies (included in all-groups)
 uv run mkdocs serve        # Serve docs locally
