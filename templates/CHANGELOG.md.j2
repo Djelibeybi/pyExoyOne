@@ -4,7 +4,7 @@
 
 ## {{ version.as_tag() }} ({{ release.tagged_date.strftime("%Y-%m-%d") }})
 
-{%- for category, commits in release["elements"].items() %}
+{%- for category, commits in release["elements"].items() if category != "unknown" %}
 {# Category title: Breaking, Fix, Documentation #}
 ### {{ category | capitalize }}
 {# List actual changes in the category #}
