@@ -40,7 +40,6 @@ jobs:
         python-version:
           - "3.12"
           - "3.13"
-          - "3.14"
         os:
           - ubuntu-24.04
           - windows-2022

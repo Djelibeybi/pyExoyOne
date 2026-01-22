@@ -77,4 +77,4 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 This package was created with
 [Copier](https://copier.readthedocs.io/) and the
 [browniebroke/pypackage-template](https://github.com/browniebroke/pypackage-template)
-project template.
+project template but no longer uses that template.
