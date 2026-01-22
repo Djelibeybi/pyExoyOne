@@ -1,8 +1,8 @@
 tasks:
   - command: |
-      pip install poetry
-      PIP_USER=false poetry install
+      curl -LsSf https://astral.sh/uv/install.sh | sh
+      source $HOME/.local/bin/env
+      uv sync --all-groups
   - command: |
-      pip install pre-commit
-      pre-commit install
-      PIP_USER=false pre-commit install-hooks
+      uv run pre-commit install
+      uv run pre-commit install-hooks
