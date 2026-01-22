@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.12 (2026-01-22)
+
+### Bug fixes
+
+- Skip unknown commits in changelog template ([`89c3c79`](https://github.com/Djelibeybi/pyExoyOne/commit/89c3c79dec5cf6106d30d5da33587ec9e7077725))
+- Update dependency asyncio-dgram to v3 ([`e0e8b63`](https://github.com/Djelibeybi/pyExoyOne/commit/e0e8b632eff1b31dc20aa19811aeb18bde568398))
+- Update dependency typer to ^0.21.0 ([`ea0e05d`](https://github.com/Djelibeybi/pyExoyOne/commit/ea0e05d336bd09fc34186e1770f803f32d0faa98))
+
 ## v1.0.11 (2025-10-23)
 
 ### Bug fixes
