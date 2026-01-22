@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.0.13 (2026-01-22)
+
+### Bug fixes
+
+- Install uv in lint job and fix claude.md formatting ([`357cf61`](https://github.com/Djelibeybi/pyExoyOne/commit/357cf61827a2dd1c2005a21f78c0a3628b9e4f67))
+
+### Build system
+
+- Migrate from poetry to uv with mypy to ty ([`3a4f1f4`](https://github.com/Djelibeybi/pyExoyOne/commit/3a4f1f47f396307201d437065f9edd554ba5eb14))
+
 ## v1.0.12 (2026-01-22)
 
 ### Bug fixes

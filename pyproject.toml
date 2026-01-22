@@ -1,6 +1,6 @@
 [project]
 name = "pyExoyOne"
-version = "1.0.12"
+version = "1.0.13"
 description = "Python library to configure and control the Exoy(tm) ONE."
 authors = [{ name = "Avi Miller", email = "me@dje.li" }]
 license = "MIT"
