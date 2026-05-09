@@ -1,6 +1,6 @@
 site_name: pyExoyOne
 theme:
-  name: material
+  variant: classic
   palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
@@ -44,12 +44,12 @@ markdown_extensions:
       permalink: true
       permalink_title: Anchor link to this section for reference
 
-  - mkdocs-typer
-
 plugins:
   - search
-  - mkdocstrings
-  - git-revision-date-localized
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
 
 repo_name: Djelibeybi/pyExoyOne
 repo_url: https://github.com/djelibeybi/pyExoyOne

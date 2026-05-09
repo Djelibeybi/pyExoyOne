@@ -10,7 +10,6 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
     "Framework :: AsyncIO",
-    "Framework :: MkDocs",
     "Framework :: Pytest",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
@@ -57,11 +56,8 @@ dev = [
     "ty>=0.0.1a10",
 ]
 docs = [
-    "mkdocs>=1.6.0",
-    "mkdocs-material>=9.5.31",
-    "mkdocs-typer>=0.0.3",
-    "mkdocstrings[python]>=1.0.0",
-    "mkdocs-git-revision-date-localized-plugin>=1.2.6",
+    "zensical>=0.0.40",
+    "mkdocstrings-python>=2.0.3",
 ]
 
 [build-system]

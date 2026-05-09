@@ -37,7 +37,7 @@ uv run pre-commit run -a   # Run all checks (ruff, ty, prettier, codespell)
 
 ```bash
 uv sync --all-groups       # Install docs dependencies (included in all-groups)
-uv run mkdocs serve        # Serve docs locally
+uv run zensical serve      # Serve docs locally
 ```
 
 ## Architecture
