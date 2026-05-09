@@ -106,7 +106,7 @@ def mode_cycle(ctx: typer.Context) -> None:
 
 @app.command("cycle-speed")
 def cycle_speed(ctx: typer.Context) -> None:
-    """Get the current effect speed."""
+    """Get the current mode cycle speed."""
     exoyone = hp.get_exoyone(ctx.obj.host)
     state = str(exoyone.state.cycleSpeed)
     rich.print(f"Current mode cycle speed: [yellow]{state}[/]")

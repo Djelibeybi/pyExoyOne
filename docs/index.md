@@ -38,7 +38,7 @@ exoyone get --host HOST COMMAND [ARGS]...
 | Command            | Description                                                          |
 | ------------------ | -------------------------------------------------------------------- |
 | `color`            | Get the current hue, saturation and brightness values.               |
-| `cycle-speed`      | Get the current effect speed.                                        |
+| `cycle-speed`      | Get the current mode cycle speed.                                    |
 | `device-name`      | Get the device name.                                                 |
 | `direction`        | Get the effect direction (left/right).                               |
 | `effect-speed`     | Get the current effect speed.                                        |
